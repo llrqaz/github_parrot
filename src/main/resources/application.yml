@@ -1,0 +1,177 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 2000
+    min-spare-threads: 30
+  port: 8886
+  servlet:
+    context-path: /
+  connection-timeout: 10000
+
+
+mybatis-plus:
+  # Mapper.xml 文件位置 Maven 多模块项目的扫描路径需以 classpath*: 开头
+  mapperLocations: classpath*:/mapper/*Mapper.xml
+  #  #MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名 实体扫描，多个package用逗号或者分号分隔
+  #  typeAliasesPackage: com.vanhr.user.dao.entity
+  #  #通过父类（或实现接口）的方式来限定扫描实体
+  #  typeAliasesSuperType: com.vanhr.user.dao.entity.baseEntity
+  #  #枚举类 扫描路径 如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性
+  #  typeEnumsPackage: com.vanhr.user.dao.enums
+  #  #启动时是否检查 MyBatis XML 文件的存在，默认不检查 仅限spring boot 使用
+  #  checkConfigLocation : true
+  #  #通过该属性可指定 MyBatis 的执行器，MyBatis 的执行器总共有三种：
+  #  # ExecutorType.SIMPLE：该执行器类型不做特殊的事情，为每个语句的执行创建一个新的预处理语句（PreparedStatement）
+  #  # ExecutorType.REUSE：该执行器类型会复用预处理语句（PreparedStatement）
+  #  # ExecutorType.BATCH：该执行器类型会批量执行所有的更新语句
+  #  executorType: SIMPLE
+  #  # 指定外部化 MyBatis Properties 配置，通过该配置可以抽离配置，实现不同环境的配置部署
+  #  configurationProperties:
+  configuration: # MyBatis 原生支持的配置
+    # 是否开启自动驼峰命名规则（camel case）映射
+    mapUnderscoreToCamelCase: true
+    # 枚举处理类,如果配置了该属性,枚举将统一使用指定处理器进行处理
+    #   org.apache.ibatis.type.EnumTypeHandler : 存储枚举的名称
+    #   org.apache.ibatis.type.EnumOrdinalTypeHandler : 存储枚举的索引
+    #   com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler : 枚举类需要实现IEnum接口或字段标记@EnumValue注解.(3.1.2以下版本为EnumTypeHandler)
+    #    defaultEnumTypeHandler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+    # 配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: null
+
+
+spring:
+  # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+
+  resources:
+    static-locations: file:${folderConfig.UploadPath},file:${folderConfig.ViewPath}
+
+  datasource:
+    # 使用Druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    #8.0以上版本用com.mysql.cj.jdbc.Driver ，8.0以下版本用com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 填写你数据库的url、登录名、密码和数据库名
+    url: jdbc:mysql://192.168.1.232:3306/parrot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: A_123456
+    druid:
+      # 连接池的配置信息
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 配置DruidStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      # 配置DruidStatViewServlet
+      stat-view-servlet:
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        allow: 127.0.0.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+        deny: 192.168.1.73
+        # 禁用HTML页面上的“Reset All”功能
+        reset-enable: false
+        # druid登录的账户名
+        login-username: admin
+        # druid登录的密码
+        login-password: 123
+
+        # 不要写2个*号！要1个！
+        url-pattern: "/druid/*"
+        #这里配true才能访问监控页面！
+        enabled: true
+
+  redis:
+    database: 8
+    host: 192.168.1.232
+    port: 6379
+    password: huiyu_redis
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 5000
+
+RSA:
+  PUBLICKEY: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsscY6bKZvBb2FEOEu/p5
+    3XsTBAhvH++7GGVCgFN+xaXEcphmrhbTo0u/uGDepAFRgM8xx1Oz1igaUPSVHEPV
+    CxLpF2Jtz/gJbrBFUddXkUxb4uDSXmkc6oFcdePih2HJ3KvEpkxG0sCzJzHMjdKm
+    F/ZDt8gA0wE+LCa5Qji3mcTwpspL5ivKum9laxzxO77/6OmWQgiQ2Hz6yZTusVr7
+    gHiEJ4NLYa/Bi4C4MO23ZeRoI1/xUvJ76KwWmnAQOK9PHae7KVYK/wOFsZ61ibw7
+    UQH4S2RvKX7UT+VM9+QoxJ/BJKgga4lLLXucsOLRJ9Hex6+Vu8uRe9E2q1cc+0sm
+    5QIDAQAB
+  PRIVATEKEY: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyxxjpspm8FvYU
+    Q4S7+nndexMECG8f77sYZUKAU37FpcRymGauFtOjS7+4YN6kAVGAzzHHU7PWKBpQ
+    9JUcQ9ULEukXYm3P+AlusEVR11eRTFvi4NJeaRzqgVx14+KHYcncq8SmTEbSwLMn
+    McyN0qYX9kO3yADTAT4sJrlCOLeZxPCmykvmK8q6b2VrHPE7vv/o6ZZCCJDYfPrJ
+    lO6xWvuAeIQng0thr8GLgLgw7bdl5GgjX/FS8nvorBaacBA4r08dp7spVgr/A4Wx
+    nrWJvDtRAfhLZG8pftRP5Uz35CjEn8EkqCBriUste5yw4tEn0d7Hr5W7y5F70Tar
+    Vxz7SyblAgMBAAECggEAU5fs+jlc0SobXlZD1nHEUd+egKBA9bnuzfVrJv3jpR9h
+    wAOq33Qk+ZINz3TcJevH5Gb9a6qjyFtwErKKlnDRSSBKhXisyDW+k1cw0pfShkoi
+    HO/q7eJQdwaN6UHpRkxfSyO2C9xWsW0RWB5c+2On7kRkXabTW9aU76gbr+89SlSX
+    5DtqyV7hs1gg+2bwqjWmz/iYvuqH69SgLgszMQOZp9bV+bONUyXkJ2pcrASgaetf
+    HG3XYXYrLU3WASHIJ6eJzHIptRhtM4ZOLxXmgENhVkM7yKgps0v/Zf01lKO7uoAd
+    BERP/cn4L6XN3FfCl1KEtIJg/l9JF+kPfyJOPAVjAQKBgQDa1bZGUNPl6zcrFAtr
+    qKxa/lNQz6DhyrUXuwoe1VQL5Sb/JRitNX7bDDPNeKduuVyl6sKXzdp7kKtCQA/Y
+    BX4F595eZV3xSaThzAkz3kycB75O0ydmp2R7q8vwAC4GQuJt3ShWt1cb013bDPna
+    v3QVFygDum5Pj/BzBjQs1o9ldQKBgQDRI9JvNGxJCfMe8WJawk2/orbP/mQEi7AP
+    raQY+M7xHXg7yl11yJWfPlGYKZPOLtrBYy296Er9I+Yz5eOzZIzvFlepwx2smwrA
+    dLQ8aeQ7DtCgg94csiyivblc0YoW5I1PgAcnaxDAoZwfhXRZfmliCo9X/SbLPAZl
+    RtJLN1DdsQKBgF4OTPGb+/duSZ/yVZZIQQw7E4RAOV3SylMQySDHgAA81a4EO772
+    pzdu3zUJDq3AbdnCNTEaATXq0DEBZ83pTmkrZ6Aa4W27wWprT+lDOpo1mc43Y0/z
+    0nR1OopFCYMXbErcK2JaGs6S4lwsD5e9gh8ufLxdfNwleat2lyZOcgOhAoGAFnqH
+    L7Suvtr26qh/LcocmTBf/dMV5PcuoUDElnqHo5rLRYHmsbYxfsAv/O7bGBopIQgL
+    7pF9HeAx6foXkzyHeVspaPGzys2PRkhE5wlqon5hJh+GTAdKjONffP54nSVLmvPj
+    0PTNBCdapHivnL7djNAdwBNRjB6TgWcvSy5S3sECgYEAlY2XVjEFEpfj0VNZmawN
+    TEczHZhOM70QMjqpjEeb8+TZBq4nb3LtiLdUrRNmj31P1TScmVZqnoe+E7hJupAU
+    rmXaVSd2XT/jA5rgw8nkBnlfcZIR4tgJBzWs9Qh8xLo7UQE0pkP7fyn4YAK1l4L6
+    fgvS4BlV2Q2dj2IAIz5742Q=
+
+case:
+  login_user_cache: true
+  dict_chche: false
+  dept_chache: false
+  post_cache: false
+
+swagger:
+  enabled: true
+
+jwt:
+  header: Authorization
+  # 令牌前缀
+  token-start-with: PARROT
+  # 必须使用最少88位的Base64对该令牌进行编码
+  base64-secret: YWQwM2YxOWQ5MWU5OWUzNjY3MzQ3MGY5NjliODQ1YjhmODBjYWUzOWE4MTI0NWVlZTM5NjhkMGUyYjI4OTZkMzBjNTY4Y2ExOGRlODEzZTRhMWVjYWQ3NWE0YmQ2YTNlMDVjYWNkOTM4ZTY4NzhlYmZjYzU3NDM5ODA2YmZiOGE=
+  # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+  token-validity-in-seconds: 14400000
+
+
+folderConfig:
+  UploadPath: F:\私有项目\parrot\Path\
+  ViewPath: F:\私有项目\parrot\Path\

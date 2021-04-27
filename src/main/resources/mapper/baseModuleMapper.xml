@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="forest.ori.parrot.model.system.mapper.baseModuleMapper">
+
+
+    <select id="findUserPermissions" resultType="java.lang.String">
+        select b.Permission from (
+            select b.ItemId from (
+                select b.id from (
+                    select distinct ObjectId from base_userrelation where Category  =1 and UserId  =#{userid}
+                ) a left join base_role b on a.ObjectId = b.id
+            )a  left join base_authorize b on a.id = b.ObjectId
+        )  a  left join base_module b on b.id = a.itemid
+
+
+    </select>
+</mapper>
