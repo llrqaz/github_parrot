@@ -47,9 +47,6 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     joda-date-time-format: yyyy-MM-dd HH:mm:ss
 
-  resources:
-    static-locations: file:${folderConfig.UploadPath},file:${folderConfig.ViewPath}
-
   datasource:
     # 使用Druid连接池
     type: com.alibaba.druid.pool.DruidDataSource

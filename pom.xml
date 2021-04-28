@@ -35,6 +35,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 		<!--时间-->
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -138,17 +144,11 @@
 			<artifactId>hutool-all</artifactId>
 			<version>5.6.3</version>
 		</dependency>
-		<!--swagger2-->
+		<!--swagger2 的包装类,重写了UI并附赠其他功。-->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<!--swagger2 ui-->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>3.0.0</version>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>knife4j-spring-boot-starter</artifactId>
+			<version>3.0.2</version>
 		</dependency>
 		<!--验证码包-->
 		<dependency>
